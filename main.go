@@ -85,8 +85,8 @@ func handle_json( file_name, key string, inter interface{} ) {
 	switch inter.(type) {
 		case string:
 			if key == g_key {
-        scan_words( file_name, inter.(string) )
-      }
+				scan_words( file_name, inter.(string) )
+			}
 
 		case map[string] interface{}:
 			m := inter.(map[string]interface{})
@@ -111,30 +111,30 @@ func handle_json( file_name, key string, inter interface{} ) {
 }
 
 func scan_words( file_name, text string ) {
-		// Use strings.Fields() instead of strings.Split() this helps us to also avoid new line '\n'
-		// and double spaces "  " and few other charecters too, apart from simple space " ".
-		words := strings.Fields(text)
+	// Use strings.Fields() instead of strings.Split() this helps us to also avoid new line '\n'
+	// and double spaces "  " and few other charecters too, apart from simple space " ".
+	words := strings.Fields(text)
 
-		for i, w := range words {
-			// Consider using levenshtein edit distance ("github.com/agnivade/levenshtein") to include spell checks.
-			// Removing comma at end of word if it occurs, more generic way should be to use levenshtein edit distance.
-			// For now lets atleast make it case-insensitive with EqualFold()
-			if strings.EqualFold( strings.TrimRight(w, ","), g_word) {
-				stmt := make([]string, 0)
+	for i, w := range words {
+		// Consider using levenshtein edit distance ("github.com/agnivade/levenshtein") to include spell checks.
+		// Removing comma at end of word if it occurs, more generic way should be to use levenshtein edit distance.
+		// For now lets atleast make it case-insensitive with EqualFold()
+		if strings.EqualFold( strings.TrimRight(w, ","), g_word) {
+			stmt := make([]string, 0)
 
-				index := i - g_length
-				if index < 0 {
-					index = 0
-				}
-
-				end := i+ g_length
-
-				for ; index <= end && index < len(words); index++ {
-					stmt = append( stmt, words[index] )
-				}
-
-				fmt.Printf("File %s : %s \n", file_name, strings.Join(stmt, " "))
+			index := i - g_length
+			if index < 0 {
+				index = 0
 			}
+
+			end := i+ g_length
+
+			for ; index <= end && index < len(words); index++ {
+				stmt = append( stmt, words[index] )
+			}
+
+			fmt.Printf("File %s : %s \n", file_name, strings.Join(stmt, " "))
+		}
 	}
 }
 

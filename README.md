@@ -21,4 +21,4 @@ An intern created the program found in `main.go` and is asking you to review the
 
 1. **Do NOT** fork this gist.
 
-1. Send a link to your **secret gist** to **a.digholm@raksul.com**
+1. Send a link to your **secret gist** to ***********@raksul.com**
