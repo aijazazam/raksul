@@ -103,9 +103,21 @@ func handle_json( file_name, key string, inter interface{} ) {
 			}
 
 		case []interface {}:
-			inter_slice := inter.([]interface{})
+			inter_slice		:= inter.([]interface{})
+			string_slice	:= make( []string, 0 )
+
 			for i := 0; i < len(inter_slice); i++ {
-				handle_json( file_name, key, inter_slice[i] )
+				switch inter_slice[i].(type) {
+					// If the value if key ("-key") is a json string array then we concatenate the array into single string and then search given "-word" in that string.
+					case string:
+						string_slice = append( string_slice, inter_slice[i].(string) )
+					default:
+						handle_json( file_name, key, inter_slice[i] )
+				}
+			}
+
+			if len(string_slice) > 0 {
+				handle_json( file_name, key, strings.Join( string_slice, " " ) )
 			}
 	}
 }
